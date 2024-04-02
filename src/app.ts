@@ -1,10 +1,13 @@
-import express, { Request, Response } from 'express';
+import cors from 'cors';
+import express from 'express';
+import helmet from 'helmet';
+
 import router from './router';
+
 const app = express();
 
-app.get('/', (_req: Request, res: Response) => {
-  res.send('Hiii!');
-});
+app.use(helmet());
+app.use(cors());
 app.use(router);
 
 export default app;

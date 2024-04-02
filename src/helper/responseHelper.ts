@@ -1,10 +1,12 @@
 import { Response } from 'express';
 
-const responseHelperSuccess = (res: Response, result: object) => {
-  res.status(200).json({
-    status: 'OK',
+export const responseHelperSuccess = (
+  res: Response,
+  statusCode: number,
+  result: Record<string, string>,
+) => {
+  res.status(statusCode).json({
+    status: 'ok',
     result: result,
   });
 };
-
-export { responseHelperSuccess };

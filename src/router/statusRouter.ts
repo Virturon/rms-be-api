@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import { getStatus } from '../controller/statusController';
 
 const statusRouter = Router();
