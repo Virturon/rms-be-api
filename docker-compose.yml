@@ -1,0 +1,16 @@
+version: '3'
+services:
+  RMS:
+    build:
+      context: .
+    ports:
+      - '3000:3000'
+    image: rms_image
+    container_name: rms_api
+    env_file:
+      - .env
+    networks:
+      - rms_network
+
+networks:
+  rms_network:
