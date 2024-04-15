@@ -1,16 +1,45 @@
 version: '3'
 services:
-  RMS:
+  rms_api:
     build:
       context: .
     ports:
       - '3000:3000'
-    image: rms_image
     container_name: rms_api
     env_file:
       - .env
     networks:
       - rms_network
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    volumes:
+      - rms_volume:/app/rms_db
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_DB=${DB_NAME}
+    env_file:
+      - .env
+    networks:
+      - rms_network
+
+  migrate:
+    build:
+      context: .
+    env_file:
+      - .env
+    environment:
+      - NEED_SEED=${NEED_SEED}
+    depends_on:
+      - db
+    command: sh -c "npm run migrate && npm run seed"
+    networks:
+      - rms_network
 
 networks:
   rms_network:
+volumes:
+  rms_volume:
