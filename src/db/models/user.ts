@@ -8,7 +8,6 @@ import {
 
 import { sequelize } from '../config';
 
-import Address from './address';
 import Role from './role';
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
@@ -20,7 +19,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare birthday: CreationOptional<string>;
   declare gender: CreationOptional<string>;
   declare roleId: CreationOptional<bigint>;
-  declare address: CreationOptional<bigint>;
+  declare address: CreationOptional<string>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
@@ -42,7 +41,10 @@ User.init(
       unique: true,
     },
     password: DataTypes.STRING,
-    phoneNumber: DataTypes.STRING,
+    phoneNumber: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
     birthday: DataTypes.STRING,
     gender: DataTypes.STRING,
     roleId: {
@@ -54,15 +56,11 @@ User.init(
       },
     },
     address: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'addresses',
-        key: 'id',
-      },
+      type: DataTypes.STRING,
+      allowNull: true,
     },
-    createdAt: { type: DataTypes.DATE, defaultValue: new Date() },
-    updatedAt: { type: DataTypes.DATE, defaultValue: new Date() },
+    createdAt: { type: DataTypes.DATE, defaultValue: () => new Date() },
+    updatedAt: { type: DataTypes.DATE, defaultValue: () => new Date() },
   },
 
   {
@@ -79,11 +77,6 @@ User.init(
 User.belongsTo(Role, {
   as: 'roles',
   foreignKey: 'roleId',
-});
-
-User.belongsTo(Address, {
-  as: 'addresses',
-  foreignKey: 'address',
 });
 
 export default User;

@@ -2,22 +2,16 @@ import { QueryInterface } from 'sequelize';
 
 module.exports = {
   async up(queryInterface: QueryInterface) {
-    await queryInterface.bulkInsert('users', [
+    await queryInterface.bulkInsert('roles', [
       {
         id: 1,
-        name: 'John Doe',
-        email: 'John@gmail.com',
-        roleId: 1,
-        address: 1,
+        role: 'ADMIN',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         id: 2,
-        name: 'christopher',
-        phoneNumber: '12345456',
-        roleId: 2,
-        address: 2,
+        role: 'USER',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -25,6 +19,6 @@ module.exports = {
   },
 
   async down(queryInterface: QueryInterface) {
-    await queryInterface.bulkDelete('users', {});
+    await queryInterface.bulkDelete('roles', {});
   },
 };

@@ -13,20 +13,13 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      scopeId: {
-        type: DataTypes.BIGINT,
-        references: {
-          model: 'scopes',
-          key: 'id',
-        },
-      },
       createdAt: {
         type: DataTypes.DATE,
-        defaultValue: new Date(),
+        defaultValue: () => new Date(),
       },
       updatedAt: {
         type: DataTypes.DATE,
-        defaultValue: new Date(),
+        defaultValue: () => new Date(),
       },
     });
   },

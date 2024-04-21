@@ -18,7 +18,10 @@ module.exports = {
         unique: true,
       },
       password: DataTypes.STRING,
-      phoneNumber: DataTypes.STRING,
+      phoneNumber: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
       birthday: DataTypes.STRING,
       gender: DataTypes.STRING,
       roleId: {
@@ -30,15 +33,11 @@ module.exports = {
         },
       },
       address: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        references: {
-          model: 'addresses',
-          key: 'id',
-        },
+        type: DataTypes.STRING,
+        allowNull: true,
       },
-      createdAt: { type: DataTypes.DATE, defaultValue: new Date() },
-      updatedAt: { type: DataTypes.DATE, defaultValue: new Date() },
+      createdAt: { type: DataTypes.DATE, defaultValue: () => new Date() },
+      updatedAt: { type: DataTypes.DATE, defaultValue: () => new Date() },
     });
   },
 
