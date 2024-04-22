@@ -18,7 +18,8 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noEmit": false,
-    "noImplicitThis": true
+    "noImplicitThis": true,
+    "experimentalDecorators": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["build"]
