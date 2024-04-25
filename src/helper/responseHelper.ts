@@ -3,7 +3,7 @@ import { Response } from 'express';
 export const responseHelperSuccess = (
   res: Response,
   statusCode: number,
-  result?: Record<string, unknown>,
+  result?: Record<string, any>,
 ) => {
   res.status(statusCode).json({
     status: 'ok',

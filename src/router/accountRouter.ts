@@ -4,13 +4,13 @@ import { createAccount } from '../controller/accountController';
 import { validateRequest } from '../helper/validateResultHelper';
 import { createAccountBodyValidation } from '../middleware/accountMiddleware';
 
-const AccountRouter = Router();
+const accountRouter = Router();
 
-AccountRouter.post(
+accountRouter.post(
   '/accounts',
   createAccountBodyValidation(),
   validateRequest,
   createAccount,
 );
 
-export default AccountRouter;
+export default accountRouter;
