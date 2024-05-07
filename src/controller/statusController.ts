@@ -9,5 +9,5 @@ export const getStatus = (_req: Request, res: Response) => {
     version,
     name,
   };
-  res.send(responseHelperSuccess(res, 200, response));
+  return responseHelperSuccess(res, 200, response);
 };
