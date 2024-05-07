@@ -8,7 +8,7 @@ import { ResponseData } from '../types/common';
 export class AccountService {
   constructor(private accountRepo: BaseRepository<User>) {}
 
-  async createAccountService(req: Request): Promise<ResponseData> {
+  async createAccount(req: Request): Promise<ResponseData> {
     try {
       const { email, phoneNumber } = req.body;
       if (!email && !phoneNumber) {
@@ -29,6 +29,22 @@ export class AccountService {
           error: 'User already exists',
         };
       }
+      return {
+        statusCode: 500,
+        error: 'Internal server error',
+      };
+    }
+  }
+
+  async deleteAccount(req: Request): Promise<ResponseData> {
+    try {
+      const { id } = req.params;
+      await this.accountRepo.delete({ where: { id: id } });
+      return {
+        statusCode: 200,
+        result: {},
+      };
+    } catch (error) {
       return {
         statusCode: 500,
         error: 'Internal server error',

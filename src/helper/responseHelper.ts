@@ -5,7 +5,7 @@ import logger from './logger';
 export const responseHelperSuccess = (
   res: Response,
   statusCode: number,
-  result?: Record<string, any>,
+  result?: Record<string, any> | null,
 ) => {
   res.status(statusCode).json({
     status: 'ok',
