@@ -7,7 +7,6 @@ export const responseHelperSuccess = (
   statusCode: number,
   result?: Record<string, any>,
 ) => {
-  logger.info(result);
   res.status(statusCode).json({
     status: 'ok',
     result: result,
