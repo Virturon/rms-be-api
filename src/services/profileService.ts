@@ -1,5 +1,3 @@
-import { Request } from 'express';
-
 import User from '../db/models/user';
 import { BaseRepository } from '../repositories/baseRepository';
 import { ResponseData } from '../types/common';
@@ -26,9 +24,8 @@ export class ProfileService {
     }
   }
 
-  async getProfileById(req: Request): Promise<ResponseData> {
+  async getProfileById(id: string): Promise<ResponseData> {
     try {
-      const { id } = req.params;
       const result = await this.profileRepo.getById(id, {
         attributes: {
           exclude: ['password', 'createdAt', 'updatedAt'],
@@ -46,10 +43,11 @@ export class ProfileService {
     }
   }
 
-  async updateProfile(req: Request): Promise<ResponseData> {
+  async updateProfile(
+    id: string,
+    data: Record<string, any>,
+  ): Promise<ResponseData> {
     try {
-      const { id } = req.params;
-      const data = req.body;
       const user = await this.profileRepo.getById(id, {});
       if (!user) {
         return {

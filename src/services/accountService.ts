@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { UniqueConstraintError } from 'sequelize';
 
 import User from '../db/models/user';
@@ -8,16 +7,16 @@ import { ResponseData } from '../types/common';
 export class AccountService {
   constructor(private accountRepo: BaseRepository<User>) {}
 
-  async createAccount(req: Request): Promise<ResponseData> {
+  async createAccount(requestBody: Record<string, any>): Promise<ResponseData> {
     try {
-      const { email, phoneNumber } = req.body;
+      const { email, phoneNumber } = requestBody;
       if (!email && !phoneNumber) {
         return {
           statusCode: 400,
           error: 'Phone number/email is required for registration login',
         };
       }
-      const result = await this.accountRepo.create(req.body, {});
+      const result = await this.accountRepo.create(requestBody, {});
       return {
         statusCode: 201,
         result,
@@ -36,9 +35,8 @@ export class AccountService {
     }
   }
 
-  async deleteAccount(req: Request): Promise<ResponseData> {
+  async deleteAccount(id: string): Promise<ResponseData> {
     try {
-      const { id } = req.params;
       await this.accountRepo.delete({ where: { id: id } });
       return {
         statusCode: 200,

@@ -13,14 +13,19 @@ export const getAllProfile = async (req: Request, res: Response) => {
 };
 
 export const getProfileById = async (req: Request, res: Response) => {
-  const { result, error, statusCode } =
-    await profileService.getProfileById(req);
+  const { id } = req.params;
+  const { result, error, statusCode } = await profileService.getProfileById(id);
   if (error) return responseHelperError(res, statusCode, { error });
   return responseHelperSuccess(res, statusCode, result);
 };
 
 export const updateProfile = async (req: Request, res: Response) => {
-  const { result, error, statusCode } = await profileService.updateProfile(req);
+  const { id } = req.params;
+  const data = req.body;
+  const { result, error, statusCode } = await profileService.updateProfile(
+    id,
+    data,
+  );
   if (error) return responseHelperError(res, statusCode, { error });
   return responseHelperSuccess(res, statusCode, result);
 };
