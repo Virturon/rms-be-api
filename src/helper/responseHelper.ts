@@ -5,11 +5,11 @@ import logger from './logger';
 export const responseHelperSuccess = (
   res: Response,
   statusCode: number,
-  result?: Record<string, any> | null,
+  result?: Record<string, any>,
 ) => {
   res.status(statusCode).json({
     status: 'ok',
-    result: result,
+    result,
   });
 };
 
@@ -21,6 +21,6 @@ export const responseHelperError = (
   logger.error(error);
   res.status(statusCode).json({
     status: 'nok',
-    error: error,
+    error,
   });
 };

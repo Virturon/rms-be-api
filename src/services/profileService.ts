@@ -31,6 +31,7 @@ export class ProfileService {
           exclude: ['password', 'createdAt', 'updatedAt'],
         },
       });
+      if (!result) return { statusCode: 404, error: 'Profile not found' };
       return {
         statusCode: 200,
         result,
