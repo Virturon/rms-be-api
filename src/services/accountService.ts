@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { UniqueConstraintError } from 'sequelize';
 
 import User from '../db/models/user';
@@ -8,16 +7,16 @@ import { ResponseData } from '../types/common';
 export class AccountService {
   constructor(private accountRepo: BaseRepository<User>) {}
 
-  async createAccountService(req: Request): Promise<ResponseData> {
+  async createAccount(requestBody: Record<string, any>): Promise<ResponseData> {
     try {
-      const { email, phoneNumber } = req.body;
+      const { email, phoneNumber } = requestBody;
       if (!email && !phoneNumber) {
         return {
           statusCode: 400,
           error: 'Phone number/email is required for registration login',
         };
       }
-      const result = await this.accountRepo.create(req.body, {});
+      const result = await this.accountRepo.create(requestBody, {});
       return {
         statusCode: 201,
         result,
@@ -29,6 +28,21 @@ export class AccountService {
           error: 'User already exists',
         };
       }
+      return {
+        statusCode: 500,
+        error: 'Internal server error',
+      };
+    }
+  }
+
+  async deleteAccount(id: string): Promise<ResponseData> {
+    try {
+      await this.accountRepo.delete({ where: { id: id } });
+      return {
+        statusCode: 200,
+        result: {},
+      };
+    } catch (error) {
       return {
         statusCode: 500,
         error: 'Internal server error',

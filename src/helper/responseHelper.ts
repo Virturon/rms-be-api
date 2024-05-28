@@ -9,7 +9,7 @@ export const responseHelperSuccess = (
 ) => {
   res.status(statusCode).json({
     status: 'ok',
-    result: result,
+    result,
   });
 };
 
@@ -21,6 +21,6 @@ export const responseHelperError = (
   logger.error(error);
   res.status(statusCode).json({
     status: 'nok',
-    error: error,
+    error,
   });
 };
